@@ -1,20 +1,45 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-if [ -z "$1" ]; then
+if [ $# -ne 1 ]; then
     echo "Usage:"
-    echo "  $0 /path/to/dpkg-backup-folder"
+    echo "  $0 /path/to/dpkg-package-backup.tar.gz"
     exit 1
 fi
 
-BACKUP_DIR="$1"
+BACKUP_TARBALL="$1"
+
+if [ ! -f "$BACKUP_TARBALL" ]; then
+    echo "Backup tarball not found: $BACKUP_TARBALL"
+    exit 1
+fi
+
+WORK_DIR="$(mktemp -d)"
+
+echo "Extracting backup:"
+echo "$BACKUP_TARBALL"
+
+tar -xzf "$BACKUP_TARBALL" -C "$WORK_DIR"
+
+BACKUP_DIR="$WORK_DIR/package-backup"
 
 if [ ! -d "$BACKUP_DIR" ]; then
-    echo "Backup directory not found: $BACKUP_DIR"
+    echo "Invalid backup archive: package-backup folder not found."
+    rm -rf "$WORK_DIR"
     exit 1
 fi
 
-echo "Using backup directory: $BACKUP_DIR"
+echo
+echo "System info from backup:"
+cat "$BACKUP_DIR/system-info.txt" 2>/dev/null || true
+echo
+
+read -p "Proceed with apt package restore? [y/N] " CONFIRM
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+    echo "Restore cancelled."
+    rm -rf "$WORK_DIR"
+    exit 0
+fi
 
 sudo apt update
 
@@ -35,6 +60,8 @@ if [ -f "$BACKUP_DIR/snap-packages.txt" ] && command -v snap >/dev/null 2>&1; th
     xargs -a "$BACKUP_DIR/snap-packages.txt" -r sudo snap install
 fi
 
+rm -rf "$WORK_DIR"
+
 echo
 echo "Restore complete."
-echo "You may want to reboot now."
+echo "You may want to reboot."
