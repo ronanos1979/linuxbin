@@ -1,0 +1,28 @@
+  530  mdls 
+  531  mdls kaymbu-image1-20190923-2105.jpg 
+  532  mdls kaymbu-image1-20190923-2105.jpg  | grep aken
+  535  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded
+  536  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | awk '{print $3}'
+  537  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | awk '{print $3_$4}'
+  538  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | awk '{print $3__$4}'
+  539  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | awk '{print $3"_"$4}'
+  540  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | awk '{print $3"_"$4}'
+  541  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | grep -v Ranking | awk '{print $3"_"$4}'
+  551  mdls kaymbu-image1-20190923-2105.jpg  | grep kMDItemDateAdded | grep -v Ranking | awk '{print $3"_"$4}'
+  552  for file in `ls *.jpg`; do mdls $file | grep kMDItemDateAdded | grep -v Ranking | awk '{print $3"_"$4}'; done
+  553  for file in `ls *.jpg`; do NAME=`mdls $file | grep kMDItemDateAdded | grep -v Ranking | awk '{print $3"_"$4}'`; echo $NAME done; done
+  555  mdls $file 
+  556  mdls $file
+  557  mdls kaymbu-image1-20190923-2105.jpg 
+  558  mdls kaymbu-image2-20190923-2105.jpg 
+  559  mdls kaymbu-image1-20190923-2105.jpg 
+  560  mdls kaymbu-image1-20190923-2105.jpg |grep | grep kMDItemDateAdded | grep -v Ranking | awk '{print $3"_"$4}'
+  561  mdls kaymbu-image1-20190923-2105.jpg 
+  563  mdls kaymbu-image1-20190923-2105.jpg 
+  564  mdls kaymbu-image2-20190923-2105.jpg 
+  566  for file in `ls *.jpg`; do NAME=`mdls $file | grep kMDItemDateAdded | grep -v Ranking | awk '{print $3"_"$4}'`; echo $NAME done; done
+  567  for file in `ls *.jpg`; do NAME=`mdls $file | grep kMDItemContentModificationDate | grep -v Ranking | awk '{print $3"_"$4}'`; echo $NAME done; done
+  568  for file in `ls *.jpg`; do NAME=`mdls $file | grep kMDItemContentModificationDate | grep -v Ranking | awk '{print $3"_"$4}'`; echo $NAME; done
+  569  for file in `ls *.jpg`; do NAME=`mdls $file | grep kMDItemContentModificationDate |  awk '{print $3"_"$4}'`; echo $NAME; done
+  730  history |grep mdls
+  734  history | grep mdls > imagecommands.txt
